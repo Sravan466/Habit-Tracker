@@ -79,11 +79,11 @@ const Achievements: React.FC = () => {
     return (
       <div className="p-6 pb-24">
         <div className="animate-pulse space-y-6">
-          <div className="h-8 bg-gray-200 rounded w-1/2"></div>
-          <div className="h-32 bg-gray-200 rounded-2xl"></div>
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+          <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded-2xl"></div>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 bg-gray-200 rounded-xl"></div>
+              <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
             ))}
           </div>
         </div>
@@ -100,7 +100,7 @@ const Achievements: React.FC = () => {
       >
         <div className="flex items-center space-x-2 mb-6">
           <Trophy className="w-6 h-6 text-yellow-500" />
-          <h1 className="text-2xl font-bold text-gray-900">Achievements</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Achievements</h1>
         </div>
 
         {/* Stats Overview */}
@@ -140,7 +140,7 @@ const Achievements: React.FC = () => {
 
         {/* Achievements Grid */}
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-gray-900">All Achievements</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">All Achievements</h2>
           
           {allAchievements.map((achievement) => {
             const isEarned = earnedTypes.includes(achievement.type);
@@ -153,22 +153,22 @@ const Achievements: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className={`rounded-2xl p-6 border transition-all ${
                   isEarned
-                    ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-200'
-                    : 'bg-gray-50 border-gray-200'
+                    ? 'bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-700'
+                    : 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700'
                 }`}
               >
                 <div className="flex items-center space-x-4">
                   <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl ${
                     isEarned 
                       ? 'bg-gradient-to-r from-yellow-400 to-orange-500' 
-                      : 'bg-gray-300'
+                      : 'bg-gray-300 dark:bg-gray-600'
                   }`}>
                     {isEarned ? achievement.icon : '🔒'}
                   </div>
                   
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
-                      <h3 className={`font-semibold ${isEarned ? 'text-gray-900' : 'text-gray-500'}`}>
+                      <h3 className={`font-semibold ${isEarned ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
                         {achievement.title}
                       </h3>
                       {isEarned && (
@@ -182,17 +182,17 @@ const Achievements: React.FC = () => {
                       )}
                     </div>
                     
-                    <p className={`text-sm mb-2 ${isEarned ? 'text-gray-600' : 'text-gray-400'}`}>
+                    <p className={`text-sm mb-2 ${isEarned ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400 dark:text-gray-500'}`}>
                       {achievement.description}
                     </p>
                     
                     <div className="flex items-center justify-between">
-                      <span className={`text-xs ${isEarned ? 'text-green-600' : 'text-gray-400'}`}>
+                      <span className={`text-xs ${isEarned ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500'}`}>
                         {achievement.requirement}
                       </span>
                       
                       {isEarned && earnedAchievement && (
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           Earned {new Date(earnedAchievement.earnedAt).toLocaleDateString()}
                         </span>
                       )}
@@ -207,8 +207,8 @@ const Achievements: React.FC = () => {
         {achievements.length === 0 && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🏆</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No achievements yet</h3>
-            <p className="text-gray-600">Start completing habits to earn your first achievement!</p>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No achievements yet</h3>
+            <p className="text-gray-600 dark:text-gray-400">Start completing habits to earn your first achievement!</p>
           </div>
         )}
       </motion.div>

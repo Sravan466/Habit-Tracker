@@ -167,7 +167,7 @@ const Dashboard: React.FC = () => {
         className="mb-8"
       >
         <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             Hello, {user?.name}! 👋
           </h1>
           <div className="flex items-center space-x-1 text-orange-500">
@@ -176,7 +176,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         
-        <div className="flex items-center text-gray-600 mb-4">
+        <div className="flex items-center text-gray-600 dark:text-gray-300 mb-4">
           <Calendar className="w-4 h-4 mr-2" />
           <span>{today}</span>
         </div>
@@ -193,8 +193,8 @@ const Dashboard: React.FC = () => {
         </div>
       </motion.div>
 
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Today's Habits</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Today's Habits</h2>
         <motion.button
           onClick={() => setShowAddModal(true)}
           whileHover={{ scale: 1.05 }}
@@ -214,11 +214,11 @@ const Dashboard: React.FC = () => {
             className="text-center py-12"
           >
             <div className="text-6xl mb-4">🎯</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No habits yet</h3>
-            <p className="text-gray-600 mb-6">Start building better habits today!</p>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No habits yet</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">Start building better habits today!</p>
             <button
               onClick={() => setShowAddModal(true)}
-              className="bg-blue-600 text-white px-6 py-3 rounded-xl font-medium"
+              className="bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors"
             >
               Create Your First Habit
             </button>

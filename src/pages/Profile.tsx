@@ -23,7 +23,7 @@ const Profile: React.FC = () => {
       });
       
       setIsDarkMode(!isDarkMode);
-      updateUser({ theme: newTheme });
+      updateUser({ ...user, theme: newTheme });
     } catch (error) {
       console.error('Theme update error:', error);
     } finally {
@@ -35,7 +35,7 @@ const Profile: React.FC = () => {
     logout();
   };
 
-  const joinedDate = user ? new Date(user.totalStreakDays || Date.now()).toLocaleDateString('en', {
+  const joinedDate = user ? new Date(user.joinedAt || Date.now()).toLocaleDateString('en', {
     month: 'long',
     year: 'numeric'
   }) : '';
@@ -45,43 +45,38 @@ const Profile: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="space-y-6"
       >
-        <div className="flex items-center space-x-2 mb-6">
-          <User className="w-6 h-6 text-blue-600" />
-          <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
-        </div>
-
         {/* Profile Header */}
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 text-white mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-              <User className="w-8 h-8" />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold">{user?.name}</h2>
-              <p className="text-blue-100">{user?.email}</p>
-              <p className="text-blue-100 text-sm">Member since {joinedDate}</p>
-            </div>
+        <div className="text-center">
+          <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
+            {user?.name?.charAt(0).toUpperCase()}
           </div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{user?.name}</h1>
+          <p className="text-gray-600 dark:text-gray-400">Joined {joinedDate}</p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
-            <div className="text-2xl font-bold text-gray-900">{user?.achievements?.length || 0}</div>
-            <div className="text-gray-600 text-sm">Achievements</div>
+        {/* User Info */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="p-4 border-b border-gray-100 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
+              <User className="w-5 h-5" />
+              <span>User Information</span>
+            </h3>
           </div>
-          <div className="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
-            <div className="text-2xl font-bold text-gray-900">{user?.totalStreakDays || 0}</div>
-            <div className="text-gray-600 text-sm">Total Streak Days</div>
+
+          <div className="p-4 space-y-4">
+            <div className="flex items-center space-x-3">
+              <Mail className="w-5 h-5 text-gray-400" />
+              <span className="text-gray-600 dark:text-gray-300">{user?.email}</span>
+            </div>
           </div>
         </div>
 
         {/* Settings */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 mb-6">
-          <div className="p-4 border-b border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="p-4 border-b border-gray-100 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
               <Settings className="w-5 h-5" />
               <span>Settings</span>
             </h3>
@@ -92,13 +87,13 @@ const Profile: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 {isDarkMode ? (
-                  <Moon className="w-5 h-5 text-gray-600" />
+                  <Moon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                 ) : (
                   <Sun className="w-5 h-5 text-yellow-500" />
                 )}
                 <div>
-                  <div className="font-medium text-gray-900">Dark Mode</div>
-                  <div className="text-sm text-gray-600">
+                  <div className="font-medium text-gray-900 dark:text-white">Dark Mode</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
                     {isDarkMode ? 'Enabled' : 'Disabled'}
                   </div>
                 </div>
@@ -120,49 +115,17 @@ const Profile: React.FC = () => {
               </motion.button>
             </div>
 
-            {/* Email */}
-            <div className="flex items-center space-x-3 py-2">
-              <Mail className="w-5 h-5 text-gray-600" />
-              <div>
-                <div className="font-medium text-gray-900">Email</div>
-                <div className="text-sm text-gray-600">{user?.email}</div>
-              </div>
-            </div>
+            {/* Logout Button */}
+            <motion.button
+              onClick={handleLogout}
+              whileTap={{ scale: 0.95 }}
+              className="w-full flex items-center justify-center space-x-2 bg-red-500 text-white p-3 rounded-xl font-medium hover:bg-red-600 transition-colors"
+            >
+              <LogOut className="w-5 h-5" />
+              <span>Logout</span>
+            </motion.button>
           </div>
         </div>
-
-        {/* Recent Achievements */}
-        {user?.achievements && user.achievements.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 mb-6">
-            <div className="p-4 border-b border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900">Recent Achievements</h3>
-            </div>
-            <div className="p-4 space-y-3">
-              {user.achievements.slice(-3).map((achievement, index) => (
-                <div key={index} className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-lg">
-                    {achievement.icon}
-                  </div>
-                  <div>
-                    <div className="font-medium text-gray-900">{achievement.title}</div>
-                    <div className="text-sm text-gray-600">{achievement.description}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Logout */}
-        <motion.button
-          onClick={handleLogout}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full flex items-center justify-center space-x-2 bg-red-500 text-white py-4 rounded-2xl font-semibold"
-        >
-          <LogOut className="w-5 h-5" />
-          <span>Sign Out</span>
-        </motion.button>
       </motion.div>
     </div>
   );

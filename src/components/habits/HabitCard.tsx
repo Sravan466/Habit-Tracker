@@ -63,34 +63,20 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, onToggle }) => {
 
   return (
     <>
-      {showConfetti && (
-        <Confetti
-          width={width}
-          height={height}
-          recycle={false}
-          numberOfPieces={150}
-          gravity={0.3}
-        />
-      )}
-      
+      {showConfetti && <Confetti width={width} height={height} recycle={false} numberOfPieces={200} />}
       <motion.div
-        layout
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100"
+        className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-700"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${colorClasses[habit.color as keyof typeof colorClasses]} flex items-center justify-center text-white text-xl`}>
+            <div className={`w-12 h-12 bg-gradient-to-r ${colorClasses[habit.color]} rounded-xl flex items-center justify-center text-2xl`}>
               {habit.icon}
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">{habit.name}</h3>
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
-                <Flame className="w-4 h-4 text-orange-500" />
-                <span>{localStreak} day streak</span>
-              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{habit.name}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{habit.description}</p>
             </div>
           </div>
 
@@ -102,7 +88,7 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, onToggle }) => {
             className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${
               isCompleted
                 ? 'bg-green-500 border-green-500 text-white'
-                : 'border-gray-300 hover:border-green-400 hover:bg-green-50'
+                : 'border-gray-300 dark:border-gray-600 hover:border-green-400 hover:bg-green-50 dark:hover:bg-green-900'
             } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <AnimatePresence mode="wait">
@@ -130,13 +116,13 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, onToggle }) => {
         </div>
 
         <div className="grid grid-cols-2 gap-4 text-center">
-          <div className="bg-gray-50 rounded-xl p-3">
-            <div className="text-lg font-bold text-gray-900">{localStreak}</div>
-            <div className="text-xs text-gray-600">Current</div>
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
+            <div className="text-lg font-bold text-gray-900 dark:text-white">{localStreak}</div>
+            <div className="text-xs text-gray-600 dark:text-gray-400">Current</div>
           </div>
-          <div className="bg-gray-50 rounded-xl p-3">
-            <div className="text-lg font-bold text-gray-900">{habit.longestStreak}</div>
-            <div className="text-xs text-gray-600">Best</div>
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
+            <div className="text-lg font-bold text-gray-900 dark:text-white">{habit.longestStreak}</div>
+            <div className="text-xs text-gray-600 dark:text-gray-400">Best</div>
           </div>
         </div>
       </motion.div>

@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const habitRoutes = require('./routes/habits');

@@ -106,7 +106,7 @@ const Progress: React.FC = () => {
       >
         <div className="flex items-center space-x-2 mb-6">
           <TrendingUp className="w-6 h-6 text-blue-600" />
-          <h1 className="text-2xl font-bold text-gray-900">Progress</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Progress</h1>
         </div>
 
         {habits.length === 0 ? (
