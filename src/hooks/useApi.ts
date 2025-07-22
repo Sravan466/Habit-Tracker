@@ -1,11 +1,13 @@
 import { useAuth } from '../contexts/AuthContext';
 
 export const useApi = () => {
-  const { token } = useAuth();
-  const API_BASE = 'http://localhost:5000/api';
+  const { token, logout } = useAuth();
+  const baseURL = process.env.NODE_ENV === 'production' 
+    ? 'https://your-backend-url.onrender.com/api' 
+    : 'http://localhost:5001/api';
 
   const apiCall = async (endpoint: string, options: RequestInit = {}) => {
-    const url = `${API_BASE}${endpoint}`;
+    const url = `${baseURL}${endpoint}`;
     const config: RequestInit = {
       ...options,
       headers: {

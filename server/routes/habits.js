@@ -23,43 +23,47 @@ const calculateStreak = async (habitId, userId) => {
 
   let currentStreak = 0;
   let longestStreak = 0;
-  let tempStreak = 0;
-  let expectedDate = new Date();
-  expectedDate.setHours(0, 0, 0, 0);
 
   // Calculate current streak
-  for (let i = 0; i < logs.length; i++) {
-    const logDate = new Date(logs[i].date + 'T00:00:00');
-    const expectedDateStr = formatDate(expectedDate);
-    
-    if (logs[i].date === expectedDateStr) {
-      currentStreak++;
-      expectedDate.setDate(expectedDate.getDate() - 1);
-    } else {
-      break;
-    }
-  }
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  // Calculate longest streak
-  for (let i = 0; i < logs.length; i++) {
-    const currentDate = new Date(logs[i].date + 'T00:00:00');
-    
-    if (i === 0) {
-      tempStreak = 1;
-    } else {
+  const firstLogDate = new Date(logs[0].date + 'T00:00:00');
+  const dayDiffFromToday = (today - firstLogDate) / (1000 * 60 * 60 * 24);
+
+  if (dayDiffFromToday <= 1) {
+    currentStreak = 1;
+    for (let i = 1; i < logs.length; i++) {
+      const currentDate = new Date(logs[i].date + 'T00:00:00');
       const prevDate = new Date(logs[i - 1].date + 'T00:00:00');
       const dayDiff = (prevDate - currentDate) / (1000 * 60 * 60 * 24);
       
       if (dayDiff === 1) {
-        tempStreak++;
+        currentStreak++;
       } else {
-        longestStreak = Math.max(longestStreak, tempStreak);
-        tempStreak = 1;
+        break;
       }
     }
   }
-  longestStreak = Math.max(longestStreak, tempStreak);
 
+  // Calculate longest streak
+  if (logs.length > 0) {
+    let tempStreak = 1;
+    longestStreak = 1;
+    for (let i = 1; i < logs.length; i++) {
+      const currentDate = new Date(logs[i].date + 'T00:00:00');
+      const prevDate = new Date(logs[i - 1].date + 'T00:00:00');
+      const dayDiff = (prevDate - currentDate) / (1000 * 60 * 60 * 24);
+
+      if (dayDiff === 1) {
+        tempStreak++;
+      } else {
+        tempStreak = 1;
+      }
+      longestStreak = Math.max(longestStreak, tempStreak);
+    }
+  }
+  
   return { currentStreak, longestStreak };
 };
 
