@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 export const useApi = () => {
   const { token, logout } = useAuth();
   const baseURL = process.env.NODE_ENV === 'production' 
-    ? 'https://your-backend-url.onrender.com/api' 
+    ? 'https://habit-tracker-backend-i0xa.onrender.com' 
     : 'http://localhost:5001/api';
 
   const apiCall = async (endpoint: string, options: RequestInit = {}) => {
