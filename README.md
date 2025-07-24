@@ -19,23 +19,10 @@ Track your daily habits, visualize your progress, and unlock achievements!
 
 ---
 
-## 🛠️ Tech Stack
-
-- **Frontend:** React, TypeScript, Vite, Tailwind CSS
-- **Backend:** Node.js, Express, MongoDB, Mongoose, JWT, Helmet, CORS
-
----
-
-## 📸 Screenshots
-
-### 🖥️ Dashboard
-![dashboard](screenshorts/dashboard.jpg)
-
-### 📈 Progress
-![progress](screenshorts/progress.jpg)
-
-### 🏆 Awards
-![awards](screenshorts/Awards.jpg)
+<h2 align="center">📸 Dashboard Screenshot</h2>
+<p align="center">
+  <img src="screenshorts/dashboard.jpg" alt="Dashboard" width="500"/>
+</p>
 
 ---
 
