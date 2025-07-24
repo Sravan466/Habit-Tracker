@@ -1,10 +1,10 @@
 import { useAuth } from '../contexts/AuthContext';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useApi = () => {
   const { token, logout } = useAuth();
-  const baseURL = process.env.NODE_ENV === 'production' 
-    ? 'https://habit-tracker-backend-i0xa.onrender.com' 
-    : 'http://localhost:5001/api';
+  const baseURL = API_URL;
 
   const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     const url = `${baseURL}${endpoint}`;
