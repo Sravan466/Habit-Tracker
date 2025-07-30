@@ -265,6 +265,51 @@ router.get('/:id/streak', authMiddleware, async (req, res) => {
 
 
 
+// Get habit progress (last 14 days only)
+router.get('/:id/progress', authMiddleware, async (req, res) => {
+  try {
+    const habitId = req.params.id;
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 14);
+
+    const habit = await Habit.findOne({ _id: habitId, userId: req.user._id });
+    if (!habit) {
+      return res.status(404).json({ message: 'Habit not found' });
+    }
+
+    const logs = await HabitLog.find({
+      habitId,
+      userId: req.user._id,
+      date: {
+        $gte: formatDate(startDate),
+        $lte: formatDate(endDate)
+      }
+    }).sort({ date: 1 });
+
+    const progressData = [];
+    const current = new Date(startDate);
+    
+    while (current <= endDate) {
+      const dateStr = formatDate(current);
+      const log = logs.find(l => l.date === dateStr);
+      
+      progressData.push({
+        date: dateStr,
+        completed: log ? log.completed : false,
+        dayName: current.toLocaleDateString('en', { weekday: 'short' })
+      });
+      
+      current.setDate(current.getDate() + 1);
+    }
+
+    res.json(progressData);
+  } catch (error) {
+    console.error('Get progress error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Delete habit
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
