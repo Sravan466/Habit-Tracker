@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Flame, Check } from 'lucide-react';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
+import LoseStreakModal from './LoseStreakModal';
 
 interface HabitCardProps {
   habit: {
@@ -38,6 +39,8 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, onToggle }) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [localStreak, setLocalStreak] = useState(habit.currentStreak);
   const [isCompleted, setIsCompleted] = useState(habit.completedToday);
+  const [showLoseStreak, setShowLoseStreak] = useState(false);
+  const [prevStreak, setPrevStreak] = useState(habit.currentStreak);
   const { width, height } = useWindowSize();
 
   const handleToggle = async () => {
@@ -54,6 +57,11 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, onToggle }) => {
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);
       }
+      // Show lose streak modal if streak is lost
+      if (prevStreak > 0 && result.currentStreak === 0) {
+        setShowLoseStreak(true);
+      }
+      setPrevStreak(result.currentStreak);
     } catch (error) {
       console.error('Toggle habit error:', error);
     } finally {
@@ -64,6 +72,7 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, onToggle }) => {
   return (
     <>
       {showConfetti && <Confetti width={width} height={height} recycle={false} numberOfPieces={200} />}
+      <LoseStreakModal open={showLoseStreak} onClose={() => setShowLoseStreak(false)} />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

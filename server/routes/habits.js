@@ -263,49 +263,7 @@ router.get('/:id/streak', authMiddleware, async (req, res) => {
   }
 });
 
-// Get habit progress (last 30 days)
-router.get('/:id/progress', authMiddleware, async (req, res) => {
-  try {
-    const habitId = req.params.id;
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 29); // Last 30 days
 
-    const habit = await Habit.findOne({ _id: habitId, userId: req.user._id });
-    if (!habit) {
-      return res.status(404).json({ message: 'Habit not found' });
-    }
-
-    const logs = await HabitLog.find({
-      habitId,
-      userId: req.user._id,
-      date: {
-        $gte: formatDate(startDate),
-        $lte: formatDate(endDate)
-      }
-    }).sort({ date: 1 });
-
-    // Create array of last 30 days with completion status
-    const progressData = [];
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      const dateStr = formatDate(date);
-      
-      const log = logs.find(l => l.date === dateStr);
-      progressData.push({
-        date: dateStr,
-        completed: log ? log.completed : false,
-        dayName: date.toLocaleDateString('en', { weekday: 'short' })
-      });
-    }
-
-    res.json(progressData);
-  } catch (error) {
-    console.error('Get progress error:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
 
 // Delete habit
 router.delete('/:id', authMiddleware, async (req, res) => {
