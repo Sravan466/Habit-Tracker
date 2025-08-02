@@ -21,17 +21,17 @@ Track your daily habits, visualize your progress, and unlock achievements!
 
 <h2 align="center">📸 Dashboard Screenshot</h2>
 <p align="center">
-  <img src="screenshorts/dashboard.jpg" alt="Dashboard" width="200"/>
+  <img src="screenshorts/dashboard.jpg" alt="Dashboard" width="250"/>
 </p>
 
 <h2 align="center">📈 Progress Screenshot</h2>
 <p align="center">
-  <img src="screenshorts/progress.jpg" alt="Progress" width=300"/>
+  <img src="screenshorts/progress.jpg" alt="Progress" width=250"/>
 </p>
 
 <h2 align="center">🏆 Awards Screenshot</h2>
 <p align="center">
-  <img src="screenshorts/Awards.jpg" alt="Awards" width="300"/>
+  <img src="screenshorts/Awards.jpg" alt="Awards" width="250"/>
 </p>
 
 ---
